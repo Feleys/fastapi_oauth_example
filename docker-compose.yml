@@ -1,0 +1,40 @@
+version: '3.7'
+
+services:
+  restfulapi_service:
+    build: ./restfulapi
+    command: uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
+    volumes:
+      - ./restfulapi/:/app/
+    ports:
+      - 8001:8000
+    depends_on:
+      - mongo_db
+
+#  test_service:
+#    build: ./test
+#    command: uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
+#    volumes:
+#      - ./test/:/app/
+#    ports:
+#      - 8002:8000
+#    depends_on:
+#      - mongo_db
+
+  mongo_db:
+    image: mongo:latest
+    container_name: mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - "./data/mongo/data:/data/db"
+
+  nginx:
+    image: nginx:latest
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./nginx_config.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - restfulapi_service
+#      - test_service

@@ -1,0 +1,8 @@
+# openssl rand --hex 32
+JWT_SK = '6c6a2e8c661d460a47ea4f621aa1e8337c880786b6ea5fd86a2144631a69a700'
+JWT_ALGO = 'HS256'
+
+
+# token
+TOKEN_TYPE = "Bearer"
+TOKEN_EXPIRE_SECONDS = 60 * 60
